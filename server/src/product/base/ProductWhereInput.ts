@@ -62,6 +62,17 @@ class ProductWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
+  itemType?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
   name?: StringNullableFilter;
 
   @ApiProperty({

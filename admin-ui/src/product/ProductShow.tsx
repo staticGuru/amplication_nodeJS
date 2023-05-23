@@ -22,6 +22,7 @@ export const ProductShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Description" source="description" />
         <TextField label="ID" source="id" />
         <TextField label="Item Price" source="itemPrice" />
+        <TextField label="Item Type" source="itemType" />
         <TextField label="Name" source="name" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField reference="Order" target="ProductId" label="Orders">

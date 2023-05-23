@@ -18,6 +18,7 @@ export const ProductCreate = (props: CreateProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="Description" multiline source="description" />
         <NumberInput label="Item Price" source="itemPrice" />
+        <TextInput label="Item Type" source="itemType" />
         <TextInput label="Name" source="name" />
         <ReferenceArrayInput
           source="orders"

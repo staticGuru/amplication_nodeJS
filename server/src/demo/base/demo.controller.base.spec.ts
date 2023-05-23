@@ -13,47 +13,35 @@ import { ACLModule } from "../../auth/acl.module";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { map } from "rxjs";
-import { ProductController } from "../product.controller";
-import { ProductService } from "../product.service";
+import { DemoController } from "../demo.controller";
+import { DemoService } from "../demo.service";
 
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   createdAt: new Date(),
-  description: "exampleDescription",
+  dataCollections: "exampleDataCollections",
   id: "exampleId",
-  itemPrice: 42.42,
-  itemType: "exampleItemType",
-  name: "exampleName",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
-  description: "exampleDescription",
+  dataCollections: "exampleDataCollections",
   id: "exampleId",
-  itemPrice: 42.42,
-  itemType: "exampleItemType",
-  name: "exampleName",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
     createdAt: new Date(),
-    description: "exampleDescription",
+    dataCollections: "exampleDataCollections",
     id: "exampleId",
-    itemPrice: 42.42,
-    itemType: "exampleItemType",
-    name: "exampleName",
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
   createdAt: new Date(),
-  description: "exampleDescription",
+  dataCollections: "exampleDataCollections",
   id: "exampleId",
-  itemPrice: 42.42,
-  itemType: "exampleItemType",
-  name: "exampleName",
   updatedAt: new Date(),
 };
 
@@ -104,18 +92,18 @@ const aclValidateRequestInterceptor = {
   },
 };
 
-describe("Product", () => {
+describe("Demo", () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         {
-          provide: ProductService,
+          provide: DemoService,
           useValue: service,
         },
       ],
-      controllers: [ProductController],
+      controllers: [DemoController],
       imports: [MorganModule.forRoot(), ACLModule],
     })
       .overrideGuard(DefaultAuthGuard)
@@ -132,9 +120,9 @@ describe("Product", () => {
     await app.init();
   });
 
-  test("POST /products", async () => {
+  test("POST /demos", async () => {
     await request(app.getHttpServer())
-      .post("/products")
+      .post("/demos")
       .send(CREATE_INPUT)
       .expect(HttpStatus.CREATED)
       .expect({
@@ -144,9 +132,9 @@ describe("Product", () => {
       });
   });
 
-  test("GET /products", async () => {
+  test("GET /demos", async () => {
     await request(app.getHttpServer())
-      .get("/products")
+      .get("/demos")
       .expect(HttpStatus.OK)
       .expect([
         {
@@ -157,9 +145,9 @@ describe("Product", () => {
       ]);
   });
 
-  test("GET /products/:id non existing", async () => {
+  test("GET /demos/:id non existing", async () => {
     await request(app.getHttpServer())
-      .get(`${"/products"}/${nonExistingId}`)
+      .get(`${"/demos"}/${nonExistingId}`)
       .expect(HttpStatus.NOT_FOUND)
       .expect({
         statusCode: HttpStatus.NOT_FOUND,
@@ -168,9 +156,9 @@ describe("Product", () => {
       });
   });
 
-  test("GET /products/:id existing", async () => {
+  test("GET /demos/:id existing", async () => {
     await request(app.getHttpServer())
-      .get(`${"/products"}/${existingId}`)
+      .get(`${"/demos"}/${existingId}`)
       .expect(HttpStatus.OK)
       .expect({
         ...FIND_ONE_RESULT,
@@ -179,10 +167,10 @@ describe("Product", () => {
       });
   });
 
-  test("POST /products existing resource", async () => {
+  test("POST /demos existing resource", async () => {
     let agent = request(app.getHttpServer());
     await agent
-      .post("/products")
+      .post("/demos")
       .send(CREATE_INPUT)
       .expect(HttpStatus.CREATED)
       .expect({
@@ -192,7 +180,7 @@ describe("Product", () => {
       })
       .then(function () {
         agent
-          .post("/products")
+          .post("/demos")
           .send(CREATE_INPUT)
           .expect(HttpStatus.CONFLICT)
           .expect({
