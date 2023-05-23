@@ -65,3 +65,10 @@ model Product {
   orders      Order[]
   updatedAt   DateTime @updatedAt
 }
+
+model Demo {
+  createdAt       DateTime @default(now())
+  dataCollections String?  @unique
+  id              String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  updatedAt       DateTime @updatedAt
+}
