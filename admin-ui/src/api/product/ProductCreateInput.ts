@@ -3,6 +3,7 @@ import { OrderCreateNestedManyWithoutProductsInput } from "./OrderCreateNestedMa
 export type ProductCreateInput = {
   description?: string | null;
   itemPrice?: number | null;
+  itemType?: string | null;
   name?: string | null;
   orders?: OrderCreateNestedManyWithoutProductsInput;
 };
